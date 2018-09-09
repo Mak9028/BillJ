@@ -1,0 +1,127 @@
+<!------ Include the above in your HEAD tag ---------->
+
+<ion-header>
+      <ion-navbar>
+            <ion-buttons left>
+                  <button ion-button menuToggle>
+                        <ion-icon name="menu"></ion-icon>
+                  </button>
+            </ion-buttons>
+            <ion-title>Bill Making</ion-title>
+      </ion-navbar>
+</ion-header>
+
+<ion-content class="background" overflow-scroll="false">
+      <ion-grid>
+            <ion-row>
+                  <ion-col>
+                        <div>
+                              <ion-label>Item</ion-label>
+                        </div>
+                  </ion-col>
+                  <ion-col>
+                        <div>
+                              <ion-label>Unit</ion-label>
+                        </div>
+                  </ion-col>
+                  <ion-col>
+                        <div>
+                              <ion-label>Cost</ion-label>
+                        </div>
+                  </ion-col>
+                  <ion-col>
+                        <div>
+                              <ion-label>Total</ion-label>
+                        </div>
+                  </ion-col>
+            </ion-row>
+      </ion-grid>
+
+
+      <!-- Assign the FormGroup of form to the HTML form
+        via a property binding (allowing the component
+        class to communicate/interact with the template -->
+      <form [formGroup]="form" (ngSubmit)="manage(form.value)">
+            <ion-list>
+                  <!-- <ion-item margin-bottom no-lines>
+                        <ion-label floating>Framework name:</ion-label>
+
+                  <!-- Assign our first FormControl of name to the input field -->
+                  <!--  <ion-input type="text" maxlength="40" formControlName="name"></ion-input>
+                        <span>Please enter a framework name of no more than 40 characters</span>
+                  </ion-item> -->
+
+
+                  <!-- Assign the technologies FormArray to the form
+                where we want to track/generate new input track fields -->
+                  <div formArrayName="technologies" margin-bottom>
+
+
+                        <!-- Assign a FormGroupName property binding to track
+                   and manage each separate generated input field.
+                   Also iterate through the technologies FormArray to
+                   correctly track/render new input fields against
+                   existing fields -->
+                        <div [formGroupName]="i" *ngFor="let tech of form.controls.technologies.controls; let i = index">
+
+
+
+                              <ion-grid>
+                                    <ion-row>
+                                          <ion-col>
+                                                <div>
+                                                      <ion-input type="text" class="rounded" placeholder="Product Name"
+                                                            text-center formControlName="p_name"></ion-input>
+                                                </div>
+                                          </ion-col>
+                                          <ion-col>
+                                                <div>
+                                                      <ion-input type="number" class="rounded" placeholder="Quntity"
+                                                            text-center formControlName="quantity" ></ion-input>
+                                                </div>
+                                          </ion-col>
+                                          <ion-col>
+                                                <div>
+
+                                                      <ion-input type="number" class="rounded" placeholder="Price"
+                                                            text-center formControlName="cost" (change)="runTimeChange(i)"></ion-input>
+                                                </div>
+                                          </ion-col>
+                                          <ion-col>
+                                                <div>
+
+                                                      <ion-input type="number" class="rounded" placeholder="Total"
+                                                            text-center formControlName="total" [(ngModel)]="anArray[pointer-1]"> </ion-input>
+
+                                                </div>
+                                          </ion-col>
+                                    </ion-row>
+                              </ion-grid>
+
+
+                              <!-- Allow generated input field to be removed -->
+                              <span float-right ion-button icon-left clear *ngIf="form.controls.technologies.length > 0"
+                                    (click)="removeInputField(i)">
+                                    <ion-icon name="close"></ion-icon>
+                                    Remove
+                              </span>
+
+                        </div>
+                  </div>
+
+
+                  <!-- Allow new input field to be generated/added -->
+                  <span ion-button float-left icon-left clear (click)="addNewInputField()">
+                        <ion-icon name="add"></ion-icon>
+                        Add a new technology
+                  </span>
+
+
+            </ion-list>
+
+
+            <!-- Only allow form to be submitted IF validation criteria for
+                input fields has been successfully passed -->
+            <button ion-button block margin-top color="primary" text-center [disabled]="!form.valid">Submit</button>
+      </form>
+</ion-content>
